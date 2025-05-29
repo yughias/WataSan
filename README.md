@@ -26,6 +26,10 @@ Alternatively, you can execute it from command line:
 - [ ] Complete Memory Map (read I/O regs)
 - [ ] Add Magnum mapper support
 
+## Demo
+
+A demo is available [here](https://yughias.github.io/pages/watasan/emulator.html)
+
 ## Screenshots
 
 | ![](data/imgs/screenshot_1.png) | ![](data/imgs/screenshot_2.png) | ![](data/imgs/screenshot_3.png) |

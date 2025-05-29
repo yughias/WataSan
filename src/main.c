@@ -33,11 +33,13 @@ void setup(){
 void loop(){
     const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
+    #ifndef __EMSCRIPTEN__
     if(keystate[SDL_SCANCODE_F3]){
         Uint32 win_id = SDL_GetWindowID(apu_win);
         if(!win_id)
             apu_win = SDL_CreateWindow("APU", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
     }
+    #endif
 
     watara_run_frame(&watara);
 

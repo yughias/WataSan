@@ -179,12 +179,23 @@ void apu_push_sample(apu_t* apu, int cycles){
     if(apu->push_counter <= 0){
         apu->push_counter += apu->push_reload;
         sample_t sample = apu_get_sample(apu);
+
+        #ifdef __EMSCRIPTEN__
+        if(apu->buffer_size < AUDIO_BUFFER_SIZE)
+            apu->buffer[apu->buffer_size++] = sample;
+        if(SDL_GetQueuedAudioSize(apu->audio_dev) <= AUDIO_BUFFER_SIZE * sizeof(sample_t)){
+            SDL_QueueAudio(apu->audio_dev, apu->buffer, apu->buffer_size * sizeof(sample_t));
+            apu->buffer_size = 0;
+        }
+        #else
         apu->buffer[apu->buffer_size++] = sample;
         if(apu->buffer_size == AUDIO_BUFFER_SIZE){
             SDL_QueueAudio(apu->audio_dev, apu->buffer, apu->buffer_size*sizeof(sample_t));
             apu->buffer_size = 0;
             while(SDL_GetQueuedAudioSize(apu->audio_dev) > AUDIO_BUFFER_SIZE*sizeof(sample_t));
         }
+        #endif
+
     }
 }
 
