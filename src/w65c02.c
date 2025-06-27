@@ -689,7 +689,7 @@ void w65c02_nmi(w65c02_t* w){
     w->pc -= 2;
     push(w->pc >> 8);
     push(w->pc & 0xFF);
-    push(w->p | SET_B);
+    push(w->p & CLEAR_B);
     u8 lsb = read_byte(0xFFFA);
     u8 msb = read_byte(0xFFFB);
     w->pc = lsb | (msb << 8);
@@ -702,7 +702,7 @@ void w65c02_irq(w65c02_t* w){
     w->pc -= 2;
     push(w->pc >> 8);
     push(w->pc & 0xFF);
-    push(w->p | SET_B);
+    push(w->p & CLEAR_B);
     u8 lsb = read_byte(0xFFFE);
     u8 msb = read_byte(0xFFFF);
     w->pc = lsb | (msb << 8);
